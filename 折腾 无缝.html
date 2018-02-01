@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 0;
+        }
+        .all {
+            width: 500px;
+            height: 200px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .screen {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        .screen li {
+            width: 500px;
+            height: 200px;
+            overflow: hidden;
+            /*float: left;*/
+        }
+        .screen ul {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            height: 1200px;
+        }
+        .all ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            line-height: 20px;
+            text-align: center;
+        }
+        .all ol li {
+            /*float: left;*/
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .all ol li.current {
+            background: yellow;
+        }
+
+    </style>
+</head>
+<div class="all" id="all">
+    <div class="screen">
+        <ul id="ul">
+            <li><img src="imgs/1.jpg" width="500" height="200"></li>
+            <li><img src="imgs/2.jpg" width="500" height="200"></li>
+            <li><img src="imgs/3.jpg" width="500" height="200"></li>
+            <li><img src="imgs/4.jpg" width="500" height="200"></li>
+            <li><img src="imgs/5.jpg" width="500" height="200"></li>
+        </ul>
+        <ol></ol>
+    </div>
+</div>
+
+<body>
+<script>
+
+    //拿到ul的ID 定义oul接收
+    var oul = document.getElementById("ul");
+    //拿到大盒子DIV的ID 定义oall接收
+    var oall = document.getElementById("all");
+    //拿到大盒子div的第一个儿子和第二个儿子,定义ol接收
+    //第一个儿子是div class"screen"  第二个儿子是ul
+    var ol = oall.children[0].children[1];
+    window.onload = function () {
+        //1.克隆第一个图片添加到最后
+        var cloneImg = oul.children[0].cloneNode(true);
+        oul.appendChild(cloneImg);
+        //2.创建ol里的li标签
+        for (var i = 0; i < oul.children.length - 1; i++) {
+            var oli = document.createElement("li");
+            oli.innerText = i + 1;
+            ol.appendChild(oli);
+            oli.index = i;
+            if (i == 0) {
+                oli.className = "current";
+            }
+            oli.onmouseenter = function () {
+                for (var j = 0; j < ol.children.length; j++) {
+                    ol.children[j].className = "";
+                }
+                this.className = "current";
+
+                animate(oul, -200 * this.index);
+                key = dianIndex = this.index;
+            }
+        }
+        //自动播放
+        timer = setInterval(autoplay, 1000);
+        //鼠标进入暂停
+        oall.onmouseenter = function () {
+            clearInterval(timer)
+        }
+        //鼠标离开启动
+        oall.onmouseleave = function () {
+            timer = setInterval(autoplay, 1000)
+        }
+    }
+    var key = 0;
+    var timer = 0;
+    var dianIndex = 0;
+
+    function autoplay() {
+        key++;
+        if (key > 5) {
+            key = 1;
+            oul.style.top = 0 + "px";
+        }
+        animate(oul, -200 * key);
+        //小点点
+        dianIndex++;
+        if (dianIndex > 4) {
+            dianIndex = 0;
+        }
+        //排他思想
+        for (var i = 0; i < ol.children.length; i++) {
+            ol.children[i].className = "";
+        }
+        ol.children[dianIndex].className = "current"
+    }
+
+
+    function animate(obj, target) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            var step = obj.offsetTop < target ? 10 : -10;
+            obj.style.top = obj.offsetTop + step + "px";
+            if (Math.abs(obj.offsetTop - target) <= 10) {
+                clearInterval(obj.timer);
+                obj.style.top = target + "px";
+            }
+
+        })
+    }
+
+
+</script>
+</body>
+</html>

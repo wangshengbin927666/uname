@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            vertical-align: top; /*除去 图片底部有3像素空白缝隙的问题 */
+        }
+
+        #box {
+            width: 490px;
+            height: 170px;
+            margin: 100px auto;
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+
+        #inner {
+            width: 490px;
+            height: 170px;
+            background-color: pink;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #inner ul {
+            width: 1000%;
+        }
+
+        #inner ul li {
+            float: left;
+            position: absolute;
+        }
+
+        .square {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        .square span {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            text-align: center;
+            line-height: 16px;
+            margin: 0 3px;
+            cursor: pointer;
+        }
+
+        .square span.current {
+            background-color: darkorange;
+            color: white;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box">
+    <div id="inner">
+        <ul>
+            <li><a><img src="img/01.jpg"/></a></li>
+            <li><a><img src="img/02.jpg"/></a></li>
+            <li><a><img src="img/03.jpg"/></a></li>
+            <li><a><img src="img/04.jpg"/></a></li>
+            <li><a><img src="img/05.jpg"/></a></li>
+        </ul>
+        <div class="square">
+            <span class="current">1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+
+
+
+
+
+    function animate(obj, target) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            var step = obj.offsetLeft < target ? 10 : -10;
+            //console.log(step)
+            obj.style.left = obj.offsetLeft + step + "px";
+            //console.log(obj.style.left)
+            //console.log(Math.abs(obj.offsetLeft-target)<10)
+            if (Math.abs(obj.offsetLeft - target) <= 10) {
+                // console.log("ddd")
+                clearInterval(obj.timer);
+                obj.style.left = target + "px";
+            }
+
+        })
+    }
+
+</script>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        body, ul, ol, li, img {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        #box {
+            width: 490px;
+            height: 170px;
+            padding: 5px;
+            position: relative;
+            border: 1px solid #ccc;
+            margin: 100px auto 0;
+            overflow: hidden;
+        }
+
+        .ad {
+            width: 490px;
+            height: 170px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #box img {
+            width: 490px;
+        }
+
+        .ad ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+        }
+
+        .ad ol li {
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            border: 1px solid #ccc;
+            text-align: center;
+            background: #fff;
+            float: left;
+            margin-right: 10px;
+            cursor: pointer;
+            _display: inline;
+        }
+
+        .ad ol li.current {
+            background: yellow;
+        }
+
+        .ad ul li {
+            float: left;
+        }
+
+        .ad ul {
+            position: absolute;
+            top: 0;
+            width: 2940px;
+        }
+
+        .ad ul li.current {
+            display: block;
+        }
+
+        #arr {
+            display: none;
+        }
+
+        #arr span {
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            left: 6px;
+            top: 50%;
+            margin-top: -20px;
+            background: #000;
+            cursor: pointer;
+            line-height: 40px;
+            text-align: center;
+            font-weight: bold;
+            font-family: '黑体';
+            font-size: 30px;
+            color: #fff;
+            opacity: 0.3;
+            border: 1px solid #fff;
+        }
+
+        #arr #right {
+            right: 6px;
+            left: auto;
+        }
+
+    </style>
+</head>
+<body>
+<div id="box" class="all">
+    <div id="ad">
+        <ul id="imgs">
+            <li><a><img src="img/1.jpg"/></a></li>
+            <li><a><img src="img/2.jpg"/></a></li>
+            <li><a><img src="img/3.jpg"/></a></li>
+            <li><a><img src="img/4.jpg"/></a></li>
+            <li><a><img src="img/5.jpg"/></a></li>
+        </ul>
+        <div id="arr"><span id="left"><</span><span id="right">></span></div>
+    </div>
+
+</div>
+</body>
+<script>
+       var box=document.getElementById("box");
+       var arrow=box.children[0].children[1];
+       var imgs=document.getElementById("imgs");
+       var lis=imgs.children;
+        box.onmouseover=function () {
+            arrow.style.display="block";
+        }
+        box.onmouseout=function () {
+            arrow.style.display="none";
+        }
+
+</script>
+</html>

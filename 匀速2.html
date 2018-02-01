@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #box {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #000000;
+            background: yellowgreen;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+<button id="but">到400</button>
+<button id="but1">回200</button>
+<div id="box"></div>
+</body>
+<script>
+   var obut=document.getElementById("but");
+   var obut1=document.getElementById("but1");
+   var obox=document.getElementById("box");
+   obut.onclick=function() {
+       getmove(obox,400);
+   }
+   obut1.onclick=function () {
+       getmove(obox,200);
+   }
+   function getmove(obj,terget){
+    clearInterval(obj.timer);
+    obj.timer=setInterval(function() {
+        var step=obj.offsetLeft<terget?10:-10;
+        obj.style.left=obj.offsetLeft+(step)+"px";
+        if (Math.abs(terget-obj.offsetLeft)<10){
+            clearInterval(obj.timer);
+            obj.style.left=terget+"px";
+        }
+    },50)
+   }
+</script>
+</html>

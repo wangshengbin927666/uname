@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            border: 0;
+        }
+
+        .all {
+            width: 500px;
+            height: 350px;
+            padding: 7px;
+            border: 1px solid #ccc;
+            margin: 100px auto;
+            position: relative;
+        }
+
+        .screen {
+            width: 500px;
+            height: 350px;
+            overflow: hidden;
+            position: relative;
+            background: brown;
+        }
+
+        .screen li {
+            width: 500px;
+            height: 350px;
+            line-height: 350px;
+            text-align: center;
+            color: yellow;
+            overflow: hidden;
+            /*float: left;*/
+        }
+
+        .screen ul {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            height: 3500px;
+            overflow: hidden;
+        }
+
+        .all ol {
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        .all ol li {
+            /*float: left;*/
+            width: 20px;
+            height: 20px;
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            margin-top: 10px;
+            cursor: pointer;
+
+        }
+
+        .all ol li.current {
+            background: yellow;
+        }
+
+    </style>
+</head>
+<div class="all" id="all">
+    <div class="screen">
+        <ul id="ul">
+
+            <li>像我这样迷茫的人</li>
+            <li>像我这样寻找的人</li>
+            <li>像我这样碌碌无为的人</li>
+            <li>你还见过多少人?</li>
+            <li>像我这么孤单的人</li>
+            <li>像我这么傻的人</li>
+            <li>像我这样不甘平凡的人</li>
+            <li>世界上有多少人</li>
+            <li>像我这样莫名其妙的人</li>
+            <li>会不会有人心疼</li>
+        </ul>
+        <ol></ol>
+    </div>
+</div>
+<body>
+
+</body>
+<script>
+    var oall = document.getElementById("all");
+    var oul = document.getElementById("ul");
+    var ol = oall.children[0].children[1];
+    window.onload = function () {
+        //克隆图片到最后
+        var aaa = oul.children[0].cloneNode(true);
+        oul.appendChild(aaa);
+        //创建ol里的li标签
+        for (var i = 0; i < oul.children.length - 1; i++) {
+            var oli = document.createElement("li");
+            oli.innerText = i + 1;
+            ol.appendChild(oli);
+            oli.index = i;
+            if (i == 0) {
+                oli.className = "current";
+            }
+            oli.onmouseenter = function () {
+                for (var j = 0; j < ol.children.length; j++) {
+                    ol.children[j].className = ""
+                }
+
+                this.className = "current";
+                animate(oul, -350 * this.index);
+                key = c = this.index;
+
+            }
+
+        }
+
+        //自动播放
+        timer = setInterval(autoplay, 1800);
+        //鼠标进去暂定
+        oall.onmouseenter = function () {
+            clearInterval(timer);
+        };
+        //鼠标离开启动
+        oall.onmouseleave = function () {
+            timer = setInterval(autoplay, 1800);
+        }
+    };
+    var a = 0;
+    var b = 0;
+    var c = 0;
+
+    function autoplay() {
+        a++;
+        if (a > 9) {
+            a = 1;
+            oul.style.top = 0 + "px";
+        }
+        animate(oul, -350 * a);
+        //小点
+        b++;
+        if (b > 9) {
+            b = 0;
+        }
+        //排他思想
+        for (var i = 0; i < ol.children.length; i++) {
+            ol.children[i].className = "";
+        }
+        ol.children[b].className = "current"
+    }
+
+    function animate(obj, target) {
+        clearInterval(obj.timer);
+        obj.timer = setInterval(function () {
+            var step = obj.offsetTop < target ? 10 : -10;
+            obj.style.top = obj.offsetTop + step + "px";
+            if (Math.abs(obj.offsetTop - target) <= 10) {
+                clearInterval(obj.timer);
+                obj.style.top = target + "px";
+            }
+        })
+    }
+
+
+</script>
+</html>
